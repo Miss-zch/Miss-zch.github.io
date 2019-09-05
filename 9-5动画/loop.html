@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>loop</title>
+		<style>
+			.lee-enter{
+				left: -800px !important;
+				opacity: 0;
+			}
+			.lee-enter-active,.lee-leave-active{
+				transition: 1s;
+			}
+			.lee-leave-to{
+				opacity: 0;
+				left: 800px !important;
+			}
+			.lee1-enter{
+				left: 800px !important;
+				opacity: 0;
+			}
+			.lee1-enter-active,.lee1-leave-active{
+				transition: 1s;
+			}
+			.lee1-leave-to{
+				opacity: 0;
+				left: -800px !important;
+			}
+			.btn_box{
+				text-align: center;
+			}
+			.loop_box{
+				position: relative;
+				width: 800px;
+				height: 500px;
+			}
+			.img_box{
+				position: absolute;
+				left: 0;
+				width: 100%;
+				height: 100%;
+			}
+			.img_box img{
+				width: 100%;
+				height: 100%;
+			}
+		</style>
+	</head>
+
+	<body>
+		<div id="box" >
+			<lee></lee>
+		</div>
+		<template id="lee">
+			<div style="width: 800px;margin:0 auto;">
+				<div class="btn_box">
+					<button @click="next">下一个</button>
+					{{type}}
+					<button @click="prev">上一个</button>
+				</div>
+				<div class="loop_box">
+					<transition v-for="(i,$index) in arr" :name="iii">
+						<div class="img_box" v-show="type==$index">
+							<img :src="i" width="800px"/>
+						</div>	
+					</transition>
+				</div>
+			</div>
+		</template>
+	</body>
+	<script src="js/vue.js"></script>
+	<script>
+		Vue.component('lee', {
+			template: '#lee',
+			methods:{
+			   	prev(){
+			   		this.iii='lee'
+			   		this.type++
+			   		if(this.type>=3){
+			   			this.type=0
+			   		}
+			   	},
+			   	next(){
+			   		this.iii='lee1'
+				   	this.type--
+				   	if(this.type<=-1){
+				   		this.type=2
+				   	}
+			   	}
+			},
+			data() {
+				return {
+					iii:'lee',
+					type: 0,
+					arr:[
+					'https://ccdn.goodq.top/caches/9b69daffc17579b848483c854813cad2/aHR0cHM6Ly81Y2RkM2FhNWM0NmVhLnQ3My5xaWZlaXllLmNvbS9xZnktY29udGVudC91cGxvYWRzLzIwMTkvMDUvNWQ3ZTc0ZDI3NTEzM2MxZmZkYTVkZTFmY2FiNGFkZTctMzAweDMwMC5qcGc_p_p100_p_3D.jpg','https://ccdn.goodq.top/caches/9b69daffc17579b848483c854813cad2/aHR0cHM6Ly81Y2RkM2FhNWM0NmVhLnQ3My5xaWZlaXllLmNvbS9xZnktY29udGVudC91cGxvYWRzLzIwMTkvMDUvNzQwMmZhZTFiYWE3OTgxODA4MWYwM2I2N2UwZTU0ZDItMzAweDMwMC5qcGc_p_p100_p_3D.jpg','https://ccdn.goodq.top/caches/9b69daffc17579b848483c854813cad2/aHR0cHM6Ly81Y2RkM2FhNWM0NmVhLnQ3My5xaWZlaXllLmNvbS9xZnktY29udGVudC91cGxvYWRzLzIwMTkvMDUvOWVlYzA0NGVmYmNiZGQwYzE0M2QwYmZhMGY2MjNkMDUtMzAweDMwMC5qcGc_p_p100_p_3D.jpg','https://ccdn.goodq.top/caches/9b69daffc17579b848483c854813cad2/aHR0cHM6Ly81Y2RkM2FhNWM0NmVhLnQ3My5xaWZlaXllLmNvbS9xZnktY29udGVudC91cGxvYWRzLzIwMTkvMDQvNGRmMDFhNzRmYTBhZWFiODIyYmM1MThhY2M2ZWFhOTYtMzAweDMwMC5qcGc_p_p100_p_3D.jpg'
+					]
+				}
+			}
+		})
+		new Vue({
+			el: "#box"
+		})
+	</script>
+</html>

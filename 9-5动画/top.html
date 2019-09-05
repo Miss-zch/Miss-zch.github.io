@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>top</title>
+		<style>
+			 *{
+			 	margin: 0;
+			 	padding: 0;
+			 }
+			 .title{
+			 	line-height: 60px;
+			 	text-align: center;
+			 	background: #000000;
+			 	color: #fff;
+			 }
+			 .two_box{
+				position: absolute;
+				top: 60px;
+				left: 0;
+				width: 100%;
+				background: rgba(0,0,0,0.8);
+				z-index: 10;
+			 }
+			 .three_box{
+			 	position: absolute;
+			 	top: 60px;
+			 	left: 0;
+			 	width: 100%;
+				background: rgba(0,0,0,0.8);
+			 }
+			 .no1-enter,.no1-leave-to{
+			 	top: 120px !important;
+			 	opacity: 0;
+			 }
+			 .no1-enter-active,.no1-leave-active{
+			 	transition: .35s;
+			 }
+			  .no2-enter,.no2-leave-to{
+			 	left: -120px !important;
+			 	opacity: 0;
+			 }
+			 .no2-enter-active,.no2-leave-active{
+			 	transition: .35s;
+			 }
+			 .no3-enter,.no3-leave-to{
+			 	top: 120px !important;
+			 	opacity: 0;
+			 }
+			 .no3-enter-active,.no3-leave-active{
+			 	transition: .35s;
+			 }
+			 .more{
+			 	position: absolute;
+			 	top: 0;
+			 	right:0px;
+			 	text-align: right;
+			 	padding-right: 20px;
+			 	width: 100%
+			 }
+		</style>
+	</head>
+
+	<body>
+		<div id="box" style="width: 800px;margin:0 auto">
+		     <lee></lee>
+		</div>
+		<template id="lee">
+			<div style="position: relative;">
+				<div class="title" @click="c_no1">
+					  首页
+				</div>
+				<transition :name="ttt">
+					<div class="two_box" v-show="no1_">
+					      <div v-for="i in arr" style="position: relative;color: #fff;line-height: 50px;text-align: center;">
+					      	 {{i.title}}  <span class="more" v-if="i.arr.length" @click="c_no2(i.arr)">></span>
+					      </div>
+					</div>
+				</transition>
+				<transition name="no3">
+					<div class="three_box" v-show="no2_">
+						 <div style="position: relative;color: #fff;line-height: 50px;text-align: center;" @click="c_no3">
+					      	返回上一级  
+					      </div>
+					      <div v-for="i in arr_" style="position: relative;color: #fff;line-height: 50px;text-align: center;">
+					      	 {{i}}  
+					      </div>
+					</div>
+				</transition>
+			</div>
+		</template>
+	</body>
+	<script src="js/vue.js"></script>
+	<script src="js/jquery.min.js"></script>
+	<script>
+		Vue.component('lee', {
+			template: '#lee',
+			methods:{
+				c_no1(){
+					
+					if(this.no2_){
+						this.no2_ = false
+					}else{
+						this.ttt = 'no1'
+						this.no1_ = !this.no1_ 
+					}
+				},
+				c_no2(arr){
+					this.ttt = 'no2'
+					this.no1_ = false
+					this.arr_ = arr
+					setTimeout(()=>{
+						this.no2_=true
+					},200)
+				},
+				c_no3(){
+					this.no2_=false
+					this.no1_ = true
+				}
+			},
+			data(){
+				return {
+					arr_:'',
+					no1_:false,
+					no2_:false,
+					ttt:'no1',
+					arr:[
+						{title:'首页',arr:[]},
+						{title:'软件产品',arr:['智能小镇管理系统','大数据管理系统']},
+						{title:'相关服务',arr:[]},
+						{title:'新闻动态',arr:[]},
+						{title:'公司介绍',arr:[]},
+						{title:'工作机会',arr:[]},
+						{title:'联系我们',arr:[]}
+					]
+				}
+			}
+		})
+		new Vue({
+			el: "#box"
+		})
+	</script>
+</html>
